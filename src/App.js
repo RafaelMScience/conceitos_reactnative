@@ -44,40 +44,39 @@ export default function App() {
         <FlatList
           data={projects}
           keyExtractor={projects.id}
-          style={styles.repositoryContainer}
           renderItem={({ item: project }) => (
             <View style={styles.repositoryContainer}>
-              <Text style={styles.project}>{project.title}</Text>
+              <Text style={styles.repository}>{project.title}</Text>
 
               <View style={styles.techsContainer}>
-                {project.tech.map((tech) => (
+                {project.techs.map((tech) => (
                   <Text key={tech} style={styles.tech}>
                     {tech}
                   </Text>
                 ))}
               </View>
+
+              <View style={styles.likesContainer}>
+                <Text
+                  style={styles.likeText}
+                  // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
+                  testID={`repository-likes-${projects.id}`}
+                >
+                  {projects.like} Curtidas {projects.like > 1 ? "S" : ""}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLikeRepository(projects.id)}
+                // Remember to replace "1" below with repository ID: {`like-button-${repository.id}`}
+                testID={`like-button-${projects.id}`}
+              >
+                <Text style={styles.buttonText}>Curtir</Text>
+              </TouchableOpacity>
             </View>
           )}
-        >
-          <View style={styles.likesContainer}>
-            <Text
-              style={styles.likeText}
-              // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
-              testID={`repository-likes-${projects.id}`}
-            >
-              {projects.like} Curtidas
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleLikeRepository(projects.id)}
-            // Remember to replace "1" below with repository ID: {`like-button-${repository.id}`}
-            testID={`like-button-${projects.id}`}
-          >
-            <Text style={styles.buttonText}>Curtir</Text>
-          </TouchableOpacity>
-        </FlatList>
+        ></FlatList>
       </SafeAreaView>
     </>
   );
